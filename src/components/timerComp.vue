@@ -1,8 +1,8 @@
 <template>
   <div class="is-flex is-align-items-center is-justify-content-space-between">
     <stop-watch :timeSeconds="timeSeconds" />
-    <primary-button icon="bx bx-play" text="play" @clicked="start"/>
-    <primary-button icon="bx bx-pause" text="stop" @clicked="stop"/>
+    <primary-button icon="bx bx-play" text="play" @clicked="start" :disabled="stopWatchInit"/>
+    <primary-button icon="bx bx-pause" text="stop" @clicked="stop" :disabled="!stopWatchInit"/>
   </div>
 </template>
 
@@ -15,7 +15,8 @@ export default defineComponent({
   name: "timerComp",
   data(){
     return{
-      timeSeconds: 0
+      timeSeconds: 0,
+      stopWatchInit: false
     }
   },
 
@@ -26,10 +27,12 @@ export default defineComponent({
 
   methods: {
     start() {
+      this.stopWatchInit = true
       alert('Start')
     },
 
     stop() {
+      this.stopWatchInit = false
       alert('Stop')
     }
   }
