@@ -1,5 +1,5 @@
 <template>
-  <button class="button">
+  <button class="button" @click="clicked">
     <span class="icon">
         <i :class='icon'></i>
     </span>
@@ -12,7 +12,11 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
     name: 'primaryButton', 
+    emits: ['clicked'],
     props: {
+        disabledBtn: {
+            type: Boolean
+        },
         icon: {
             type: String,
             required: true
@@ -21,11 +25,17 @@ export default defineComponent({
             type: String,
             required: true
         }
+    },
+
+    methods: {
+        clicked() :void{
+            this.$emit('clicked')
+        }
     }
 });
 </script>
 
-<style scoped>
+<style scoped>  
 i{
     font-size: 2rem;
 }

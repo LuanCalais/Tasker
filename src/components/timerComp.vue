@@ -1,8 +1,8 @@
 <template>
   <div class="is-flex is-align-items-center is-justify-content-space-between">
     <stop-watch :timeSeconds="timeSeconds" />
-    <primary-button icon="bx bx-play" text="play"/>
-    <primary-button icon="bx bx-pause" text="stop"/>
+    <primary-button icon="bx bx-play" text="play" @clicked="start"/>
+    <primary-button icon="bx bx-pause" text="stop" @clicked="stop"/>
   </div>
 </template>
 
@@ -23,6 +23,17 @@ export default defineComponent({
     "stop-watch": stopWatch,
     "primary-button": primaryButton
   },
+
+  methods: {
+    start() {
+      alert('Start')
+    },
+
+    stop() {
+      alert('Stop')
+    }
+  }
+
 });
 </script>
 
