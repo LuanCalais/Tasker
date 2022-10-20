@@ -48,7 +48,16 @@ export default defineComponent({
 
     stop() {
       this.stopWatchInit = false;
-      this.stopWatch = 0
+
+      // Stop the stopWatch
+      clearInterval(this.stopWatch)
+
+      /* 
+          here we go to emit the timer to parent component
+          befor set 0 to timeSeconds 
+      */
+
+      this.timeSeconds = 0
     },
   },
 });
