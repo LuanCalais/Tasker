@@ -45,7 +45,8 @@ export default defineComponent({
         this.$emit("isErr", { isErr: true, description: "Descrição inválida" });
         return;
       }
-      this.$emit("saveTask", { taskDescription: this.description, time: data });
+      this.$emit("saveTask", { description: this.description, time: data });
+      this.description = ''
     },
   },
 });

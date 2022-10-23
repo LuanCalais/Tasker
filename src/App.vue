@@ -16,7 +16,7 @@ import taskList from "./components/tasksList.vue";
     <formTask @saveTask="showTask" @isErr="showError" />
 
     <div class="task-list">
-      <taskList />
+      <taskList v-for="(tasks, index) in tasks" :key="`_taksKey_${index}`" :item="tasks" />
     </div>
   </section>
 
@@ -32,6 +32,7 @@ import taskList from "./components/tasksList.vue";
 export default defineComponent({
   data() {
     return {
+      tasks: [] as ITask[],
       errMesage: {
         isErr: false,
         description: "",
@@ -40,7 +41,7 @@ export default defineComponent({
   },
   methods: {
     showTask(task: ITask): void {
-      console.log(task);
+      this.tasks.push(task)
     },
     showError(err: IErr) {
       if (err) {
