@@ -23,6 +23,7 @@ import primaryButton from "./primaryButton.vue";
 
 export default defineComponent({
   name: "timerComp",
+  emits: ['timerEnd'],
   data() {
     return {
       timeSeconds: 0,
@@ -52,10 +53,8 @@ export default defineComponent({
       // Stop the stopWatch
       clearInterval(this.stopWatch)
 
-      /* 
-          here we go to emit the timer to parent component
-          befor set 0 to timeSeconds 
-      */
+      // emit the time seconds
+      this.$emit('timerEnd', this.timeSeconds)
 
       this.timeSeconds = 0
     },
