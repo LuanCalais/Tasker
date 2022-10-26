@@ -5,6 +5,7 @@ import formTask from "./components/formTask.vue";
 import type IErr from "./components/interfaces/IErr";
 import type ITask from "./components/interfaces/ITask";
 import taskList from "./components/tasksList.vue";
+import boxItemList from './components/boxItemList.vue'
 </script>
 
 <template>
@@ -18,6 +19,9 @@ import taskList from "./components/tasksList.vue";
     <div class="task-list">
       <taskList v-for="(tasks, index) in tasks" :key="`_taksKey_${index}`" :item="tasks" />
     </div>
+    <boxItemList class="empty-list" v-if="emptyList">
+      Você não está produtivo! Vá trabaiá 
+    </boxItemList>
   </section>
 
   <div class="err-notification" v-if="errMesage.isErr">
@@ -53,6 +57,11 @@ export default defineComponent({
       }, 2500);
     },
   },
+  computed: {
+    emptyList(): boolean{
+      return this.tasks.length === 0
+    }
+  }
 });
 </script>
 
@@ -63,6 +72,10 @@ aside {
 
 .task-list {
   margin: 1rem;
+}
+
+.empty-list{
+  background-color: #F7D046;
 }
 
 .err-notification {
