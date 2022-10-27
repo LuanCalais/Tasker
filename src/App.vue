@@ -4,8 +4,9 @@ import asideBar from "./components/asideBar.vue";
 import formTask from "./components/formTask.vue";
 import type IErr from "./components/interfaces/IErr";
 import type ITask from "./components/interfaces/ITask";
+import type ISucc from "./components/interfaces/ISucc"
 import taskList from "./components/tasksList.vue";
-import boxItemList from './components/boxItemList.vue'
+import boxItemList from "./components/boxItemList.vue";
 </script>
 
 <template>
@@ -14,13 +15,17 @@ import boxItemList from './components/boxItemList.vue'
   </aside>
 
   <section class="column is-three-quarter content">
-    <formTask @saveTask="showTask" @isErr="showError" />
+    <formTask @saveTask="showTask" @isErr="showError" @isSucc="showSuccess"/>
 
     <div class="task-list">
-      <taskList v-for="(tasks, index) in tasks" :key="`_taksKey_${index}`" :item="tasks" />
+      <taskList
+        v-for="(tasks, index) in tasks"
+        :key="`_taksKey_${index}`"
+        :item="tasks"
+      />
     </div>
     <boxItemList class="empty-list" v-if="emptyList">
-      Você não está produtivo! Vá trabaiá 
+      Você não está produtivo! Vá trabaiá
     </boxItemList>
   </section>
 
@@ -28,6 +33,13 @@ import boxItemList from './components/boxItemList.vue'
     <article class="message is-danger">
       <div class="message-header">O correu um erro</div>
       <div class="message-body">{{ errMesage.description }}</div>
+    </article>
+  </div>
+
+  <div class="success-notification" v-if="succMesage.isSucc">
+    <article class="message is-success">
+      <div class="message-header">Taks Cadastrada</div>
+      <div class="message-body">{{ succMesage.description }}</div>
     </article>
   </div>
 </template>
@@ -41,11 +53,15 @@ export default defineComponent({
         isErr: false,
         description: "",
       },
+      succMesage: {
+        isSucc: false,
+        description: "",
+      },
     };
   },
   methods: {
     showTask(task: ITask): void {
-      this.tasks.push(task)
+      this.tasks.push(task);
     },
     showError(err: IErr) {
       if (err) {
@@ -56,12 +72,21 @@ export default defineComponent({
         this.errMesage.isErr = false;
       }, 2500);
     },
+    showSuccess(succ: ISucc){
+      if(succ){
+        this.succMesage.isSucc = succ.isSucc;
+        this.succMesage.description = succ.description
+      }
+      setTimeout(() => {
+        this.succMesage.isSucc = false
+      }, 2500)
+    }
   },
   computed: {
-    emptyList(): boolean{
-      return this.tasks.length === 0
-    }
-  }
+    emptyList(): boolean {
+      return this.tasks.length === 0;
+    },
+  },
 });
 </script>
 
@@ -74,11 +99,12 @@ aside {
   margin: 1rem;
 }
 
-.empty-list{
-  background-color: #F7D046;
+.empty-list {
+  background-color: #f7d046;
 }
 
-.err-notification {
+.err-notification,
+.success-notification {
   position: absolute;
   right: 0;
   width: 300px;

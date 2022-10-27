@@ -28,7 +28,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "formTask",
-  emits: ["saveTask", "isErr"],
+  emits: ["saveTask", "isErr", "isSucc"],
   components: {
     "timer-comp": timerComp,
   },
@@ -45,6 +45,7 @@ export default defineComponent({
         this.$emit("isErr", { isErr: true, description: "Descrição inválida" });
         return;
       }
+      this.$emit("isSucc", {isSucc: true, description: "Task Salva!"})
       this.$emit("saveTask", { description: this.description, time: data });
       this.description = ''
     },
