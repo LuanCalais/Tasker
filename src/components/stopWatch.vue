@@ -23,4 +23,10 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+
+  .display{
+    color: var(--txt-primary);
+  }
+
+</style>

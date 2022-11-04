@@ -15,4 +15,8 @@ import { defineComponent } from 'vue';
 </script>
 
 <style scoped>
+.box{
+    background-color: var(--bg-primary);
+    color: var(--txt-primary);
+}
 </style>

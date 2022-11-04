@@ -57,4 +57,8 @@ export default defineComponent({
 .input {
   font-weight: 300;
 }
+
+.form-task{
+  background-color: var(--bg-primary);
+}
 </style>
