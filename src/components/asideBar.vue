@@ -4,7 +4,7 @@
       <img src="../assets/logo.svg" alt="Logo Task Tracker" />
     </h1>
 
-    <button class="button">Tema</button>
+    <button class="button" @click="changeTheme">{{textInput}}</button>
 
   </header>
 </template>
@@ -14,6 +14,30 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "asideBar",
+  emits: ["onChangeTheme"],
+  data() {
+    return {
+      darkMode: false
+    }
+  },
+
+  computed: {
+    textInput(): string {
+      if(!this.darkMode){
+        return `Dark Mode`
+      }else{
+        return `Light Mode` 
+      }
+    }
+  },
+
+  methods: {
+    changeTheme(): void{
+      this.darkMode = !this.darkMode
+      this.$emit("onChangeTheme", this.darkMode)
+    }
+  }
+
 });
 </script>
 

@@ -4,44 +4,45 @@ import asideBar from "./components/asideBar.vue";
 import formTask from "./components/formTask.vue";
 import type IErr from "./components/interfaces/IErr";
 import type ITask from "./components/interfaces/ITask";
-import type ISucc from "./components/interfaces/ISucc"
+import type ISucc from "./components/interfaces/ISucc";
 import taskList from "./components/tasksList.vue";
 import boxItemList from "./components/boxItemList.vue";
 </script>
 
 <template>
-  <aside class="column is-one-quarter">
-    <asideBar />
-  </aside>
+  <main :class="{'is-dark-mode' : isDark}">
+    <aside class="column is-one-quarter">
+      <asideBar @onChangeTheme="themeVerify" />
+    </aside>
 
-  <section class="column is-three-quarter content">
-    <formTask @saveTask="showTask" @isErr="showError" @isSucc="showSuccess"/>
+    <section class="column is-three-quarter content">
+      <formTask @saveTask="showTask" @isErr="showError" @isSucc="showSuccess" />
 
-    <div class="task-list">
-      <taskList
-        v-for="(tasks, index) in tasks"
-        :key="`_taksKey_${index}`"
-        :item="tasks"
-      />
+      <div class="task-list">
+        <taskList
+          v-for="(tasks, index) in tasks"
+          :key="`_taksKey_${index}`"
+          :item="tasks"
+        />
+      </div>
+      <boxItemList class="empty-list" v-if="emptyList">
+        Você não está produtivo! Vá trabaiá
+      </boxItemList>
+    </section>
+    <div class="err-notification" v-if="errMesage.isErr">
+      <article class="message is-danger">
+        <div class="message-header">O correu um erro</div>
+        <div class="message-body">{{ errMesage.description }}</div>
+      </article>
     </div>
-    <boxItemList class="empty-list" v-if="emptyList">
-      Você não está produtivo! Vá trabaiá
-    </boxItemList>
-  </section>
 
-  <div class="err-notification" v-if="errMesage.isErr">
-    <article class="message is-danger">
-      <div class="message-header">O correu um erro</div>
-      <div class="message-body">{{ errMesage.description }}</div>
-    </article>
-  </div>
-
-  <div class="success-notification" v-if="succMesage.isSucc">
-    <article class="message is-success">
-      <div class="message-header">Taks Cadastrada</div>
-      <div class="message-body">{{ succMesage.description }}</div>
-    </article>
-  </div>
+    <div class="success-notification" v-if="succMesage.isSucc">
+      <article class="message is-success">
+        <div class="message-header">Taks Cadastrada</div>
+        <div class="message-body">{{ succMesage.description }}</div>
+      </article>
+    </div>
+  </main>
 </template>
 
 <script lang="ts">
@@ -49,6 +50,7 @@ export default defineComponent({
   data() {
     return {
       tasks: [] as ITask[],
+      isDark: false,
       errMesage: {
         isErr: false,
         description: "",
@@ -60,6 +62,9 @@ export default defineComponent({
     };
   },
   methods: {
+    themeVerify(theme: boolean): void {
+      this.isDark = theme
+    },
     showTask(task: ITask): void {
       this.tasks.push(task);
     },
@@ -72,15 +77,15 @@ export default defineComponent({
         this.errMesage.isErr = false;
       }, 2500);
     },
-    showSuccess(succ: ISucc){
-      if(succ){
+    showSuccess(succ: ISucc) {
+      if (succ) {
         this.succMesage.isSucc = succ.isSucc;
-        this.succMesage.description = succ.description
+        this.succMesage.description = succ.description;
       }
       setTimeout(() => {
-        this.succMesage.isSucc = false
-      }, 2500)
-    }
+        this.succMesage.isSucc = false;
+      }, 2500);
+    },
   },
   computed: {
     emptyList(): boolean {
@@ -91,6 +96,27 @@ export default defineComponent({
 </script>
 
 <style scoped>
+main {
+   display: flex; 
+   box-sizing: border-box; 
+  --bg-primary: #fff;
+  --txt-primary: #000;
+  --bg-secondary: #112c44;
+}
+main.is-dark-mode{
+  --bg-primary: #2b2d42;
+  --txt-primary: #ddd;
+  --bg-secondary: #000;
+}
+
+header{
+  background-color: var(--bg-secondary);
+}
+
+.content{
+  background-color: var(--bg-primary);
+}
+
 aside {
   padding: 0;
 }
