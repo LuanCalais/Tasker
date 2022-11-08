@@ -6,6 +6,23 @@
 
     <button class="button" @click="changeTheme">{{textInput}}</button>
 
+    <nav class="panel mt-5">
+      <ul>
+        <li class="mt-3">
+          <router-link to="/" class="link">
+            <i class='bx bx-notepad'></i>
+            Tasks
+          </router-link>
+        </li>
+        <li class="mt-3">
+          <router-link to="/projects" class="link">
+            <i class='bx bxs-book-content'></i>
+            Projetos
+          </router-link>
+        </li>
+      </ul>
+    </nav>
+
   </header>
 </template>
 
@@ -68,6 +85,15 @@ img{
     transition: .2s;
     color: #fff;
     background-color: #0e1d2b;
+}
+
+.link{
+  cursor: pointer;
+  color: #fff;
+}
+
+.link:hover {
+  color: #faf0ca;
 }
 
 </style>

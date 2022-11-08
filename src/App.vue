@@ -16,19 +16,9 @@ import boxItemList from "./components/boxItemList.vue";
     </aside>
 
     <section class="column is-three-quarter content">
-      <formTask @saveTask="showTask" @isErr="showError" @isSucc="showSuccess" />
-
-      <div class="task-list">
-        <taskList
-          v-for="(tasks, index) in tasks"
-          :key="`_taksKey_${index}`"
-          :item="tasks"
-        />
-      </div>
-      <boxItemList class="empty-list" v-if="emptyList">
-        Você não está produtivo! Vá trabaiá
-      </boxItemList>
+      <router-view></router-view>
     </section>
+    
     <div class="err-notification" v-if="errMesage.isErr">
       <article class="message is-danger">
         <div class="message-header">O correu um erro</div>
@@ -65,27 +55,6 @@ export default defineComponent({
     themeVerify(theme: boolean): void {
       this.isDark = theme
     },
-    showTask(task: ITask): void {
-      this.tasks.push(task);
-    },
-    showError(err: IErr) {
-      if (err) {
-        this.errMesage.isErr = err.isErr;
-        this.errMesage.description = err.description;
-      }
-      setTimeout(() => {
-        this.errMesage.isErr = false;
-      }, 2500);
-    },
-    showSuccess(succ: ISucc) {
-      if (succ) {
-        this.succMesage.isSucc = succ.isSucc;
-        this.succMesage.description = succ.description;
-      }
-      setTimeout(() => {
-        this.succMesage.isSucc = false;
-      }, 2500);
-    },
   },
   computed: {
     emptyList(): boolean {
@@ -121,13 +90,6 @@ aside {
   padding: 0;
 }
 
-.task-list {
-  margin: 1rem;
-}
-
-.empty-list {
-  background-color: #f7d046;
-}
 
 .err-notification,
 .success-notification {
