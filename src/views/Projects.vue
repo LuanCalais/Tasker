@@ -1,6 +1,13 @@
 <template>
 
-    <h1>Projects Works</h1>
+    <div class="proj">
+        <h1 class="title">
+            Projetos
+        </h1>
+
+        <router-view></router-view> 
+
+    </div>
 
 </template>
 
@@ -14,5 +21,7 @@ import { defineComponent } from 'vue';
 </script>
 
 <style scoped>
-h1{ color: red; }
+.proj{
+    margin: 1.4rem;
+}
 </style>
