@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { defineComponent } from "vue";
 import asideBar from "./components/asideBar.vue";
-import formTask from "./components/formTask.vue";
-import type IErr from "./components/interfaces/IErr";
 import type ITask from "./components/interfaces/ITask";
-import type ISucc from "./components/interfaces/ISucc";
-import taskList from "./components/tasksList.vue";
-import boxItemList from "./components/boxItemList.vue";
+import PrimaryNotifications from "./components/primaryNotifications.vue"
+
 </script>
 
 <template>
@@ -16,22 +13,11 @@ import boxItemList from "./components/boxItemList.vue";
     </aside>
 
     <section class="column is-three-quarter content">
+      <PrimaryNotifications></PrimaryNotifications>
+
       <router-view></router-view>
     </section>
     
-    <div class="err-notification" v-if="errMesage.isErr">
-      <article class="message is-danger">
-        <div class="message-header">O correu um erro</div>
-        <div class="message-body">{{ errMesage.description }}</div>
-      </article>
-    </div>
-
-    <div class="success-notification" v-if="succMesage.isSucc">
-      <article class="message is-success">
-        <div class="message-header">Taks Cadastrada</div>
-        <div class="message-body">{{ succMesage.description }}</div>
-      </article>
-    </div>
   </main>
 </template>
 
@@ -41,14 +27,6 @@ export default defineComponent({
     return {
       tasks: [] as ITask[],
       isDark: false,
-      errMesage: {
-        isErr: false,
-        description: "",
-      },
-      succMesage: {
-        isSucc: false,
-        description: "",
-      },
     };
   },
   methods: {
