@@ -1,4 +1,4 @@
-// A store deve ser definida no arquivo main.ts para funcionar
+// The store must be defined in main.ts file to work 
 // Key for access the store
 import type { InjectionKey } from "vue";
 import { createStore, Store, useStore as VuexUseStore } from "vuex";
