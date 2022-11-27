@@ -43,8 +43,14 @@ export default defineComponent({
   },
 
   methods: {
-    save() {
-      this.store.commit(CREATE_PROJECT, this.nameProject);
+    async save() {
+      try{
+        await this.store.commit(CREATE_PROJECT, this.nameProject);
+        this.$router.push('/projects')
+      }catch(err){
+        console.error(`Error: ${err}`)
+      }
+
     },
   },
 
