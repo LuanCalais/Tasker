@@ -75,7 +75,7 @@ export default defineComponent({
     async save(task: ITask) {
       try {
         if (!task.description.trim()) alert("You can't register a empty task");
-        await this.store.commit(CREATE_TASK, task);
+        await this.store.commit(CREATE_TASK, task.description, task.time);
         return;
       } catch (err) {
         console.error(`Error: ${err}`);
@@ -87,7 +87,7 @@ export default defineComponent({
     const store = useStore();
     return {
       store,
-      tasks: computed(() => store.state.tasks)
+      tasks: computed(() => store.state.tasks),
     };
   },
 
