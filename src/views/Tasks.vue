@@ -1,5 +1,5 @@
 <template>
-  <formTask @saveTask="showTask" @isErr="showError" @isSucc="showSuccess" />
+  <formTask @saveTask="save" @isErr="showError" @isSucc="showSuccess" />
 
   <div class="task-list">
     <taskList
@@ -11,14 +11,16 @@
   <boxItemList class="empty-list" v-if="emptyList">
     Você não está produtivo! Vá trabaiá
   </boxItemList>
-  
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { CREATE_TASK } from "@/store/typeTasksMutations";
+import { useStore } from "@/store";
 import formTask from "@/components/formTask.vue";
 import taskList from "@/components/tasksList.vue";
 import boxItemList from "@/components/boxItemList.vue";
+import { computed } from "@vue/reactivity";
 import type ITask from "@/components/interfaces/ITask";
 import type ISucc from "@/components/interfaces/ISucc";
 import type IErr from "@/components/interfaces/IErr";
@@ -33,7 +35,6 @@ export default defineComponent({
 
   data() {
     return {
-      tasks: [] as ITask[],
       errMesage: {
         isErr: false,
         description: "",
@@ -47,8 +48,10 @@ export default defineComponent({
 
   methods: {
     showTask(task: ITask): void {
-        this.tasks.push(task)
+      console.error(task);
+      this.tasks.push(task);
     },
+
     showError(err: IErr) {
       if (err) {
         this.errMesage.isErr = err.isErr;
@@ -68,6 +71,24 @@ export default defineComponent({
         this.succMesage.isSucc = false;
       }, 2500);
     },
+
+    async save(task: ITask) {
+      try {
+        if (!task.description.trim()) alert("You can't register a empty task");
+        await this.store.commit(CREATE_TASK, task);
+        return;
+      } catch (err) {
+        console.error(`Error: ${err}`);
+      }
+    },
+  },
+
+  setup() {
+    const store = useStore();
+    return {
+      store,
+      tasks: computed(() => store.state.tasks)
+    };
   },
 
   computed: {
@@ -86,5 +107,4 @@ export default defineComponent({
 .empty-list {
   background-color: #f7d046;
 }
-
 </style>

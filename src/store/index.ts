@@ -1,46 +1,53 @@
-// The store must be defined in main.ts file to work 
+// The store must be defined in main.ts file to work
 // Key for access the store
 import type { InjectionKey } from "vue";
 import { createStore, Store, useStore as VuexUseStore } from "vuex";
-import type { INotification } from './../components/interfaces/INotification';
+import type { INotification } from "./../components/interfaces/INotification";
 import type IProject from "@/components/interfaces/IProject";
-import { CREATE_PROJECT, NOTIFY } from './typeMutations';
+import type ITask from "@/components/interfaces/ITask";
+import { CREATE_PROJECT, NOTIFY } from "./typeMutations";
+import { CREATE_TASK } from "./typeTasksMutations";
 
-interface State{
-    projects: IProject[],
-    notifications: INotification[]
+interface State {
+  projects: IProject[];
+  notifications: INotification[];
+  tasks: ITask[];
 }
 
-export const key: InjectionKey<Store<State>> = Symbol()
+export const key: InjectionKey<Store<State>> = Symbol();
 
 export const store = createStore<State>({
-    state:{
-        projects: [],
-        notifications: []
+  state: {
+    projects: [],
+    notifications: [],
+    tasks: [],
+  },
+
+  mutations: {
+    [CREATE_PROJECT](state, nameProject: string) {
+      const project = {
+        id: new Date().toISOString(),
+        name: nameProject,
+      } as IProject;
+
+      state.projects.push(project);
     },
+    [CREATE_TASK](state: any, nameTask: string, timeTask: number) {
+      const task = {
+        id: new Date().toISOString(),
+        description: nameTask,
+        time: timeTask,
+      } as ITask;
 
-    mutations: {
-        [CREATE_PROJECT](state, nameProject: string){
-            const project = {
-                id: new Date().toISOString(),
-                name: nameProject
-            } as IProject
-            
-            state.projects.push(project)
-        },
-        [NOTIFY](state, newNotification){
-            newNotification.id = new Date().getTime()
-            state.notifications.push(newNotification)
-        }
-    }
+      state.tasks.push(task);
+    },
+    [NOTIFY](state, newNotification) {
+      newNotification.id = new Date().getTime();
+      state.notifications.push(newNotification);
+    },
+  },
+});
 
-})
-
-export function useStore(): Store<State>{
-    return VuexUseStore(key)
+export function useStore(): Store<State> {
+  return VuexUseStore(key);
 }
-
-
-
-
-

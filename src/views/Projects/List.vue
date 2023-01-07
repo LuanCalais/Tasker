@@ -37,7 +37,7 @@ export default defineComponent({
     console.log(store.state.projects)
 
     return {
-      // Reactive with computed becaus the value current changes 
+      // Reactive with computed because the value current changes 
       projects: computed(() => store.state.projects),
       store
     };

@@ -21,7 +21,7 @@
 import { defineComponent } from "vue";
 import { useStore } from "@/store";
 import { CREATE_PROJECT } from "@/store/typeMutations";
-import notify from '@/hooks/notificator'
+import notify from "@/hooks/notificator";
 
 export default defineComponent({
   name: "FormProject",
@@ -45,27 +45,26 @@ export default defineComponent({
 
   methods: {
     async save() {
-      console.log(this.useNotify)
-      try{
-        if(!this.nameProject.trim()) {
-          alert("You can't regiser a empty project")
+      console.log(this.useNotify);
+      try {
+        if (!this.nameProject.trim()) {
+          alert("You can't register a empty project");
           return;
         }
         await this.store.commit(CREATE_PROJECT, this.nameProject);
-        this.$router.push('/projects')
-      }catch(err){
-        console.error(`Error: ${err}`)
+        this.$router.push("/projects");
+      } catch (err) {
+        console.error(`Error: ${err}`);
       }
-
     },
   },
 
   setup() {
     const store = useStore();
-    const useNotify = notify()
+    const useNotify = notify();
     return {
       store,
-      useNotify
+      useNotify,
     };
   },
 });
